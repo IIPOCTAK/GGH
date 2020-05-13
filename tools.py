@@ -18,7 +18,7 @@ def lookup_in_alphabet(char: str, reverse: bool = False) -> object:
     if reverse:
         alphabet = dict(enumerate(string.ascii_letters + string.digits + string.punctuation + ' '))
     else:
-        alphabet = {v:k for k,v in dict(enumerate(string.ascii_letters + string.digits + string.punctuation + ' ')).items()}
+        alphabet = {v: k for k, v in dict(enumerate(string.ascii_letters + string.digits + string.punctuation + ' ')).items()}
     return alphabet[char] if not reverse else alphabet[char % len(alphabet)]
 
 
@@ -45,15 +45,15 @@ def multiply_matrices(matrix_A: 'Matrix', matrix_B: 'Matrix') -> 'Matrix':
 
 
 def matrix2list(matrix: 'Matrix') -> list:
-    ''' This function convert a matrix into list with same values '''
+    ''' This function convert a matrix into list with same values. '''
     # Double loop because it looks like: [[],[]].
     # correct_matrix needs for convert each value in matrix to int
-    return [ j for i in correct_matrix(matrix).tolist() for j in i ]
+    return [j for i in correct_matrix(matrix).tolist() for j in i]
 
 
 def correct_matrix(matrix: 'Matrix') -> 'Matrix':
     ''' This function round each value in matrix and returns matrix with edited values. '''
-    return np.matrix([int(round(j)) for i in matrix.tolist() for j in i ])
+    return np.matrix([int(round(j)) for i in matrix.tolist() for j in i])
 
 
 def get_matrix_from_cache(path_to_file: str = '/tmp/matrix_cache.json') -> list:
@@ -83,7 +83,7 @@ def is_valid_ranges(start: int, start_range: list, end: int, end_range: list) ->
 
 
 def generate_basis(start: int = 20, end: int = 301) -> 'Matrix':
-    ''' Function generating a basis and returns it. 
+    ''' Function generating a basis and returns it.
 
         Arguments:
         ----------
@@ -131,16 +131,16 @@ def generate_unimodular_matrix(start: int = 20, end: int = 301) -> 'Matrix':
             f"Argument should be integer values, start range should be [20, 100], end - [200, 500]"
         )
 
-    unimodular_matrix = np.random.randint(start, high=end, size=(2,2))
+    unimodular_matrix = np.random.randint(start, high=end, size=(2, 2))
 
     iteration = 0
     while iteration <= 9999:
-        unimodular_matrix = np.random.randint(start, high=end, size=(2,2))
-        
+        unimodular_matrix = np.random.randint(start, high=end, size=(2, 2))
+
         if determinant_of_matrix(unimodular_matrix) == 1:
             add_matrix_in_cache(unimodular_matrix.tolist())
             return np.matrix(unimodular_matrix)
-        
+
         iteration += 1
 
     else:
@@ -157,8 +157,5 @@ def generate_error_vector(start: int = -10, end: int = 11) -> 'Matrix':
         raise NotValidValue(
             f"Argument should be integer values, start range should be [-10], end - [11]"
         )
-    error_vector = np.random.randint(start, high=end, size=(1,2))
+    error_vector = np.random.randint(start, high=end, size=(1, 2))
     return np.matrix(error_vector)
-
-
-

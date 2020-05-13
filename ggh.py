@@ -49,7 +49,8 @@ class GGH(GGHAbstract):
 
         message = self.convert_message_in_digits(self.message)
         # Message should be have even amount of letters, if not - add space in end
-        if len(message) % 2 != 0: message.append(lookup_in_alphabet(' '))
+        if len(message) % 2 != 0:
+            message.append(lookup_in_alphabet(' '))
 
         list_for_encrypt = list()
         list_for_decrypt = list()
@@ -61,7 +62,6 @@ class GGH(GGHAbstract):
             list_for_encrypt.append(self.encrypt())
             list_for_decrypt.append(self.decrypt())
 
-        
         one_list_for_decrypt = [sublist for item in list_for_decrypt for sublist in item]
         one_list_for_encrypt = [sublist for item in list_for_encrypt for sublist in item]
 
@@ -79,20 +79,20 @@ class GGH(GGHAbstract):
 
     @private
     def convert_message_in_digits(self, message: str) -> list:
-        ''' The function rebuild the message into 
-        a list with integers that correspond to the letters in the alphabet. 
+        ''' The function rebuild the message into
+        a list with integers that correspond to the letters in the alphabet.
         '''
         return [lookup_in_alphabet(item) for item in message]
 
     @private
     def generate(self):
-        ''' Function is generating basis, unimodular matrix, error vector and 
+        ''' Function is generating basis, unimodular matrix, error vector and
         calculate public key, inverse basis, inverse unimodular matrix.
         '''
         self.basis = generate_basis()
         if self.verbose:
             self.logger.debug(f"The Bob generated random basis:\n{self.basis}")
-        
+
         self.inverse_basis = inverse_matrix(self.basis)
         if self.verbose:
             self.logger.debug(f"The Bob calculated inverse basis:\n{self.inverse_basis}")
@@ -109,7 +109,7 @@ class GGH(GGHAbstract):
         if self.verbose:
             self.logger.debug(
                 f"The Bob calculated pulic key:\n{self.public_key}\nand transmitted it to Alice"
-                )
+            )
 
         self.error_vector = generate_error_vector()
         if self.verbose:
@@ -120,7 +120,7 @@ class GGH(GGHAbstract):
         ''' Function is encrypting message using message, public key and error vector. '''
         self.encrypted_message = sum_matrices(
             multiply_matrices(self.message, self.public_key), self.error_vector
-            )
+        )
         return matrix2list(self.encrypted_message)
 
     @private
@@ -129,8 +129,8 @@ class GGH(GGHAbstract):
         inverse basis and inverse unimodular matrix. '''
         self.pre_decrypted_message = correct_matrix(
             multiply_matrices(self.encrypted_message, self.inverse_basis)
-            )
+        )
         self.decrypted_message = multiply_matrices(
             self.pre_decrypted_message, self.inverse_unimodular_matrix
-            )
+        )
         return matrix2list(self.decrypted_message)

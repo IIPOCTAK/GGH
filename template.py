@@ -15,15 +15,15 @@ class GGHAbstract(ABC):
     @abstractmethod
     def algorithm(self):
         pass
-    
+
     @abstractmethod
     def generate(self):
         pass
-    
+
     @abstractmethod
     def encrypt(self):
         return None
-    
+
     @abstractmethod
     def decrypt(self):
         return None
